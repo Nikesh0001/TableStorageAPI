@@ -1,0 +1,65 @@
+﻿
+
+@* Apply amy dak color or dark images here and the barchart should be transparent and some content here
+
+------------x-------------------x------------
+ *@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div style="width: 70%;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+    // Retrieve the JSON object from the ViewBag
+    var chartData = @Html.Raw(ViewBag.ChartData);
+
+    // Process the chart data
+    var labels = [];
+    var approved = 0;
+    var rejected = 0;
+    var pending = 0;
+
+    for (var i = 0; i < chartData.length; i++) {
+        if (chartData[i].ApprovalStatus == 0) {
+            approved++;
+        } else if (chartData[i].ApprovalStatus == 1) {
+            rejected++;
+        } else if (chartData[i].ApprovalStatus == 2) {
+            pending++;
+        }
+    }
+
+    labels.push('Approved', 'Rejected', 'Pending');
+
+    // Use the processed data to create the chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Approval Status',
+                data: [approved, rejected, pending],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
