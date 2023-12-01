@@ -1,0 +1,39 @@
+﻿@*{
+    ViewBag.Title = "DashBoard";
+}*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics</title>
+    <link rel="stylesheet" href="~/css/DashBoard.css">
+</head>
+<body>
+    <form>
+        <!-- Buttons positioned at the right side -->
+        <div class="button-container">
+            <button asp-controller="Chart" asp-action="BarChart">Status</button>
+            <button asp-controller="Chart" asp-action="PieChart">DataBase</button>
+            
+         </div>
+    </form>
+    <div class="con">
+    <div class="container">
+        <h1 class="animate-text">Get Started Today</h1><br /><br />
+        <p class="animate-text">
+            Data analytics involves the process of examining, cleaning, transforming,<br /> and modeling
+            data to derive insights and make informed decisions.<br /> Representing these insights graphically can enhance
+            understanding<br /> and communication.
+        </p>
+    </div>
+
+
+    <!-- Adding an image -->
+    <div id="a">
+        <img src="~/Data.png"  />
+    </div>
+    </div>
+</body>
+</html>
+

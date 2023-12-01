@@ -1,0 +1,146 @@
+﻿@model List<DTOChart>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+
+        body {
+            background: linear-gradient(to right, #d9e1e8, #f3e5f5);
+        }
+
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+       #myPieChart{
+           padding-top:50px;
+           margin-left:540px;
+           height:40%;
+           width:500px;
+       }
+        .card{
+           
+            border:solid 2px;
+            height:200px;
+            width:300px;
+            position:absolute;
+            top:20%;
+        }
+
+
+        .card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            
+        }
+
+        .card-title {
+            color: #6c757d;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: #212529;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+
+        .card:hover {
+            box-shadow: 0 6px 9px rgba(0, 0, 0, 0.1);
+            opacity: 0.2;
+        }
+    
+      
+    </style>
+</head>
+<body>
+    <div class="chart">
+        <div class="chart-container">
+            <canvas id="myPieChart"></canvas>
+        </div>
+
+           <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Entities</h5>
+                    <p class="card-text">@Model.Count</p>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        // Parse the serialized data from ViewBag
+        var chartData = @Html.Raw(ViewBag.ChartData);
+
+        // Extract unique EntityNames and their counts
+        var entityCounts = {};
+        chartData.forEach(function (data) {
+            if (entityCounts[data.EntityName] === undefined) {
+                entityCounts[data.EntityName] = 1;
+            } else {
+                entityCounts[data.EntityName]++;
+            }
+        });
+
+        // Prepare data for the Pie chart
+        var labels = Object.keys(entityCounts);
+        var data = Object.values(entityCounts);
+
+        // Create Pie chart
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        'rgba(0, 0, 0, 1)',             // Black
+                        'rgba(34, 34, 34, 0.9)',        // Dark Gray
+                        'rgba(68, 68, 68, 0.8)',        // Darker Gray
+                        'rgba(102, 102, 102, 0.7)',     // Even Darker Gray
+                        'rgba(136, 136, 136, 0.6)',     // Dark Gray
+                        'rgba(170, 170, 170, 0.5)',     // Gray
+                        'rgba(204, 204, 204, 0.4)',     // Light Gray
+                        'rgba(238, 238, 238, 0.3)',     // Lighter Gray
+                        'rgba(255, 255, 255, 0.2)',     // Almost White
+                        'rgba(255, 255, 255, 0.1)',     // Very Light Gray
+                        'rgba(255, 255, 255, 0)',       // Transparent White
+                        'rgba(255, 255, 255, 0)'        // Transparent White
+                    ],
+
+                    borderColor: [
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000',  // Black
+                        '#000'   // Black
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
